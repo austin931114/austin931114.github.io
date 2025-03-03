@@ -49,6 +49,8 @@
     --glass-effect: backdrop-filter: blur(4px);
 
     --item-background: linear-gradient(120deg, rgba(161, 161, 160, 0.9) 0%, rgba(100, 100, 100, 0.9) 80%);
+    --hardware-accel: translate3d(0, 0, 0);
+    --will-change: transform, opacity;
 }
 
 @media (min-width: 800px) {
@@ -362,6 +364,8 @@ a:focus {
 .content-item.active {
     display: block;
     animation: fadeInUp 0.5s ease-out;
+    transform: var(--hardware-accel);
+    will-change: var(--will-change);
 }
 
 @media (max-width: 800px) {
@@ -404,6 +408,8 @@ a:focus {
     border-radius: 15px;
     box-shadow: var(--bs);
     transition: all 250ms ease;
+    transform: var(--hardware-accel);
+    will-change: var(--will-change);
 }
 
 .body-item:hover {
