@@ -59,43 +59,80 @@ const projects = {
     }
 };
 
-// Get all tabs
-var tabs = document.querySelectorAll('.tab');
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab switching functionality
+    const tabs = document.querySelectorAll('.tab');
+    const contentItems = document.querySelectorAll('.content-item');
 
-window.onscroll = function() {scrollFunction()};
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Remove active class from all tabs and content items
+            tabs.forEach(t => t.classList.remove('active'));
+            contentItems.forEach(item => item.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            this.classList.add('active');
+            
+            // Show corresponding content
+            const targetId = this.getAttribute('data-target');
+            document.getElementById(targetId).classList.add('active');
+        });
+    });
 
-function scrollFunction() {
-    var navbar = document.getElementById('navbar'); // Corrected ID reference
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        navbar.style.top = "0";
-        navbar.style.padding = "1rem";
-    } else {
-        navbar.style.top = "-100px";
-        navbar.style.padding = "1rem";
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+        const navbar = document.getElementById('navbar');
+        if (window.scrollY > 20) {
+            navbar.style.top = '0';
+            navbar.style.padding = '1rem';
+        } else {
+            navbar.style.top = '-100px';
+            navbar.style.padding = '1rem';
+        }
+    });
+    
+    // Create particle background
+    createParticles();
+});
+
+// Particle background effect
+function createParticles() {
+    const particleContainer = document.createElement('div');
+    particleContainer.className = 'particles-container';
+    document.body.prepend(particleContainer);
+    
+    // Create particles
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        // Random position
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        
+        // Random size
+        const size = Math.random() * 5 + 1;
+        
+        // Random opacity
+        const opacity = Math.random() * 0.5 + 0.1;
+        
+        // Random animation duration
+        const duration = Math.random() * 20 + 10;
+        
+        // Apply styles
+        particle.style.cssText = `
+            left: ${posX}%;
+            top: ${posY}%;
+            width: ${size}px;
+            height: ${size}px;
+            opacity: ${opacity};
+            animation: float ${duration}s infinite ease-in-out;
+            animation-delay: ${Math.random() * 5}s;
+        `;
+        
+        particleContainer.appendChild(particle);
     }
 }
-
-tabs.forEach(function(tab) {
-    tab.addEventListener('click', function() {
-        // Remove active class from all tabs
-        tabs.forEach(function(tab) {
-            tab.classList.remove('active');
-        });
-        
-        // Add active class to clicked tab
-        tab.classList.add('active');
-
-        // Hide all content items
-        var contentItems = document.querySelectorAll('.content-item');
-        contentItems.forEach(function(item) {
-            item.classList.remove('active');
-        });
-
-        // Show the active content item
-        var activeContent = document.getElementById(tab.getAttribute('data-target'));
-        activeContent.classList.add('active');
-    });
-});
 
 // Assuming projects object is defined as in your question
 
